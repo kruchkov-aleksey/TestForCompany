@@ -5,9 +5,14 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Pokemon(
+data class PokemonSearch(
+    @SerializedName("ability")
+    val ability: List<Description>? = null
+):Parcelable
+@Parcelize
+data class Description(
     @SerializedName("name")
-    var name: String = "",
+    val name: String = "",
     @SerializedName("url")
     val url: String = ""
 ):Parcelable

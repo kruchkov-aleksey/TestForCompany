@@ -1,9 +1,7 @@
 package com.example.testforcompany
 
 import android.app.Application
-import com.example.testforcompany.di.module.appModule
-import com.example.testforcompany.di.module.repoModule
-import com.example.testforcompany.di.module.viewModelModule
+import com.example.testforcompany.di.module.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -12,7 +10,7 @@ class App: Application() {
         super.onCreate()
         startKoin{
             androidContext(this@App)
-            modules(listOf(appModule, repoModule, viewModelModule))
+            modules(listOf(appModule, repoModule, viewModelModule, repoSearch, searchViewModel))
         }
     }
 }

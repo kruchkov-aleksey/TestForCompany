@@ -9,8 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testforcompany.data.model.Pokemon
+import com.example.testforcompany.data.model.PokemonSearch
+import com.example.testforcompany.data.repository.SearchRepository
 import com.example.testforcompany.main.adapter.MainAdapter
+import com.example.testforcompany.main.adapter.SearchAdapter
 import com.example.testforcompany.main.viewmodel.MainViewModel
+import com.example.testforcompany.main.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,8 +34,9 @@ class Search : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private val mainViewModel: MainViewModel by viewModel()
-    private lateinit var adapter: MainAdapter
-    private val pokemons: List<Pokemon> = arrayListOf()
+    private val searchViewModel: SearchViewModel by viewModel()
+    private lateinit var adapter: SearchAdapter
+    private val pokemons: ArrayList<PokemonSearch> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +49,11 @@ class Search : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
-        setupObserver()
+        setupObserverSearch()
+        button.setOnClickListener{
+            searchViewModel.fetchPokemon(editTextTextPersonName.toString())
+            adapter.addAll(pokemons)
+        }
     }
 
     override fun onCreateView(
@@ -66,7 +75,7 @@ class Search : Fragment() {
     }
     private fun setupUI(){
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = MainAdapter(arrayListOf())
+        adapter = SearchAdapter(pokemons)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
                 recyclerView.context,(recyclerView.layoutManager as LinearLayoutManager).orientation
@@ -74,12 +83,11 @@ class Search : Fragment() {
         )
         recyclerView.adapter = adapter
     }
-    private fun setupObserver(){
-        mainViewModel.pokemons.observe(viewLifecycleOwner, Observer {
-            it.let {
-                adapter.addData(pokemons)
-                adapter.notifyDataSetChanged()
-            }
+    private fun setupObserverSearch(){
+        searchViewModel.name = editTextTextPersonName.toString()
+        searchViewModel.pokemons.observe(viewLifecycleOwner,{
+            adapter.addAll(pokemons)
+            adapter.notifyDataSetChanged()
         })
     }
 }
