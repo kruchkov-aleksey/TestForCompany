@@ -8,7 +8,7 @@ import com.example.testforcompany.R
 import com.example.testforcompany.data.model.Pokemon
 import kotlinx.android.synthetic.main.item_layout.view.*
 
-class MainAdapter(private val pokemons: ArrayList<Pokemon>): RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
+class MainAdapter(private var pokemons: ArrayList<Pokemon>): RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
 
     class DataViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         fun bind(pokemon: Pokemon){
@@ -33,6 +33,7 @@ class MainAdapter(private val pokemons: ArrayList<Pokemon>): RecyclerView.Adapte
     }
 
     fun addData(list: List<Pokemon>){
+        pokemons = arrayListOf()
         pokemons.addAll(list)
     }
 }

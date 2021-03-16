@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Pokemon(
     @SerializedName("name")
-    var name: String = "",
+    val name: String = "",
     @SerializedName("url")
     val url: String = ""
 ):Parcelable
