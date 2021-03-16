@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import androidx.room.Room.databaseBuilder
 import com.example.testforcompany.data.model.Pokemon
 import com.example.testforcompany.main.adapter.MainAdapter
 import com.example.testforcompany.main.viewmodel.MainViewModel

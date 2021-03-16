@@ -8,10 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import com.example.testforcompany.data.model.Employee
 import com.example.testforcompany.data.model.Pokemon
 import com.example.testforcompany.main.adapter.MainAdapter
 import com.example.testforcompany.main.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.item_layout.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -29,6 +33,8 @@ class Search : Fragment() {
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var adapter: MainAdapter
     private val pokemons: ArrayList<Pokemon> = arrayListOf()
+    private val appDataBase: AppDataBase by inject()
+    private val employeeDao: EmployeeDao by inject()
 
     private var param1: String? = null
     private var param2: String? = null
@@ -54,6 +60,8 @@ class Search : Fragment() {
         button.setOnClickListener{
             mainViewModel.fetchPokemons(editText.text.toString())
         }
+
+
     }
 
     private fun setupUI(){

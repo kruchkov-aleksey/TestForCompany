@@ -5,4 +5,6 @@
     <string name="random">Любой</string>
     <string name="search_text">Введите имя для поиска</string>
     <string name="random_button">Вывести рандомного покемона</string>
+    <string name="add_button">Добавить в избранное</string>
+    <string name="delete_button">Удалить изи избранного</string>
 </resources>

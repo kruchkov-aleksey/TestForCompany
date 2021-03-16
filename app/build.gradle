@@ -76,4 +76,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
     implementation "com.squareup.retrofit2:adapter-rxjava:2.3.0"
+
+    //Room
+    implementation "android.arch.persistence.room:runtime:1.1.1"
 }
