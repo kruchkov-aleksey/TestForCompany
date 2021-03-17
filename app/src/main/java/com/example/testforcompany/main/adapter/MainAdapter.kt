@@ -8,11 +8,14 @@ import com.example.testforcompany.R
 import com.example.testforcompany.data.model.Pokemon
 import kotlinx.android.synthetic.main.item_layout.view.*
 
-class MainAdapter(private var pokemons: ArrayList<Pokemon>): RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
+class MainAdapter(private var pokemons: ArrayList<Pokemon>,val listener: RecyclerViewClickListener): RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
 
-    class DataViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    inner class DataViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         fun bind(pokemon: Pokemon){
-            itemView.nameView.text = pokemon.name
+                itemView.nameView.text = pokemon.name
+                itemView.switch_add.setOnCheckedChangeListener { buttonView, isChecked ->
+                listener.setOnCheckedChangeListener(pokemon, isChecked)
+            }
         }
     }
 
@@ -35,5 +38,9 @@ class MainAdapter(private var pokemons: ArrayList<Pokemon>): RecyclerView.Adapte
     fun addData(list: List<Pokemon>){
         pokemons = arrayListOf()
         pokemons.addAll(list)
+    }
+
+    interface RecyclerViewClickListener{
+        fun setOnCheckedChangeListener(item: Pokemon, isChecked: Boolean)
     }
 }

@@ -1,14 +1,13 @@
 package com.example.testforcompany
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Switch
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.example.testforcompany.data.model.Employee
 import com.example.testforcompany.data.model.Pokemon
 import com.example.testforcompany.main.adapter.MainAdapter
@@ -45,6 +44,20 @@ class Search : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+    }
+
+    private val listener: MainAdapter.RecyclerViewClickListener = object:
+    MainAdapter.RecyclerViewClickListener{
+        override fun setOnCheckedChangeListener(item: Pokemon, isChecked: Boolean) {
+            val employee: Employee? = null
+            employee?.name = item.name
+            if(isChecked){
+                employee?.let { employeeDao.insert(it) }
+            }else{
+                employee?.let { employeeDao.delete(it) }
+            }
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,13 +73,11 @@ class Search : Fragment() {
         button.setOnClickListener{
             mainViewModel.fetchPokemons(editText.text.toString())
         }
-
-
     }
 
     private fun setupUI(){
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = MainAdapter(pokemons)
+        adapter = MainAdapter(pokemons, listener)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
                 recyclerView.context,(recyclerView.layoutManager as LinearLayoutManager).orientation

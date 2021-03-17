@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import androidx.room.Room.databaseBuilder
+import com.example.testforcompany.data.model.Employee
 import com.example.testforcompany.data.model.Pokemon
 import com.example.testforcompany.main.adapter.MainAdapter
 import com.example.testforcompany.main.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_random.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.recyclerView
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val ARG_PARAM1 = "param1"
@@ -25,6 +27,7 @@ class Random : Fragment() {
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var adapter: MainAdapter
     private val pokemons: ArrayList<Pokemon> = arrayListOf()
+    private val employeeDao: EmployeeDao by inject()
 
     private var param1: String? = null
     private var param2: String? = null
@@ -44,9 +47,22 @@ class Random : Fragment() {
         return inflater.inflate(R.layout.fragment_random, container, false)
     }
 
+    private val listener: MainAdapter.RecyclerViewClickListener = object:
+        MainAdapter.RecyclerViewClickListener{
+        override fun setOnCheckedChangeListener(item: Pokemon, isChecked: Boolean) {
+            val employee: Employee? = null
+            employee?.name = item.name
+            if(isChecked){
+                employee?.let { employeeDao.insert(it) }
+            }else{
+                employee?.let { employeeDao.delete(it) }
+            }
+        }
+    }
+
     private fun setupUI(){
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = MainAdapter(pokemons)
+        adapter = MainAdapter(pokemons, listener)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
                 recyclerView.context,(recyclerView.layoutManager as LinearLayoutManager).orientation

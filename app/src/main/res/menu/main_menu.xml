@@ -6,4 +6,7 @@
     <item
         android:id="@+id/random"
         android:title="@string/random" />
+    <item
+        android:id="@+id/favorite"
+        android:title="@string/favorite"/>
 </menu>

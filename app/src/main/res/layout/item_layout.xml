@@ -17,7 +17,6 @@
 
     <Switch
         android:id="@+id/switch_add"
-        android:checked="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textOn="@string/add_button"
