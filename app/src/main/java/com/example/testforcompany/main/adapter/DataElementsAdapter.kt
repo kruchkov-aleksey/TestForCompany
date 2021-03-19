@@ -1,5 +1,6 @@
 package com.example.testforcompany.main.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,5 +34,6 @@ class DataElementsAdapter(private var employees: ArrayList<Employee>): RecyclerV
     }
     fun addData(list: List<Employee>){
         employees.addAll(list)
+        Log.e("Response", employees.toString())
     }
 }

@@ -31,7 +31,7 @@ class Favorite : Fragment() {
 
     private val dataViewModel: DataViewModel by viewModel()
     private lateinit var adapter: DataElementsAdapter
-    private val employees: ArrayList<Employee> = arrayListOf()
+    private var employees: ArrayList<Employee> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,5 +87,6 @@ class Favorite : Fragment() {
         dataViewModel.employees.observe(viewLifecycleOwner,{
             dataViewModel.employees.value?.let { it1 -> adapter.addData(it1) }
         })
+        adapter.notifyDataSetChanged()
     }
 }

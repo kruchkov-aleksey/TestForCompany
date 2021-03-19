@@ -9,7 +9,6 @@ import java.net.ResponseCache
 
 class MainRepository (private val apiService: ApiService) {
     fun searchPokemon(name: String): Single<ResponseWrapper<List<Pokemon>>> {
-        Log.e("Response",name)
         return apiService.searchPokemon(name = name)
     }
 }

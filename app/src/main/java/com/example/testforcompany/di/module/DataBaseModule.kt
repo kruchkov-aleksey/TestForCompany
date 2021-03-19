@@ -12,7 +12,7 @@ import org.koin.java.KoinJavaComponent.get
 
 val dataBaseModule: Module = module{
     single{
-        Room.databaseBuilder(androidApplication(),AppDataBase::class.java, "mydb").build()
+        Room.databaseBuilder(androidApplication(),AppDataBase::class.java, "mydb").allowMainThreadQueries().build()
     }
     single{
         get<AppDataBase>().employeeDao()

@@ -1,6 +1,7 @@
 package com.example.testforcompany
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,12 +52,13 @@ class Random : Fragment() {
     private val listener: MainAdapter.RecyclerViewClickListener = object:
         MainAdapter.RecyclerViewClickListener{
         override fun setOnCheckedChangeListener(item: Pokemon, isChecked: Boolean) {
-            val employee: Employee? = null
-            employee?.name = item.name
+            val employee = Employee()
+            employee.name = item.name
+            Log.e("Response",employee.name)
             if(isChecked){
-                employee?.let { dataViewModel.addEmployee(it) }
+                employee.let { dataViewModel.addEmployee(it) }
             }else{
-                employee?.let { dataViewModel.delete(it) }
+                employee.let { dataViewModel.delete(it) }
             }
         }
     }

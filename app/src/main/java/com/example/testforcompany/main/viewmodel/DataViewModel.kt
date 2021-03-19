@@ -21,6 +21,7 @@ class DataViewModel(private val employeeDao: EmployeeDao): ViewModel() {
         employeeDao.getAll().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io()).subscribe(
                 {
+                    Log.e("Response",it.toString())
                     employees.postValue(it)
                 },
                 {
