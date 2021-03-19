@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testforcompany.data.model.Employee
 import com.example.testforcompany.data.model.Pokemon
 import com.example.testforcompany.main.adapter.MainAdapter
+import com.example.testforcompany.main.viewmodel.DataViewModel
 import com.example.testforcompany.main.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.item_layout.*
@@ -32,8 +33,7 @@ class Search : Fragment() {
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var adapter: MainAdapter
     private val pokemons: ArrayList<Pokemon> = arrayListOf()
-    private val appDataBase: AppDataBase by inject()
-    private val employeeDao: EmployeeDao by inject()
+    private val dataViewModel: DataViewModel by viewModel()
 
     private var param1: String? = null
     private var param2: String? = null
@@ -53,9 +53,9 @@ class Search : Fragment() {
             val employee: Employee? = null
             employee?.name = item.name
             if(isChecked){
-                employee?.let { employeeDao.insert(it) }
+                employee?.let { dataViewModel.addEmployee(it) }
             }else{
-                employee?.let { employeeDao.delete(it) }
+                employee?.let { dataViewModel.delete(it) }
             }
         }
     }

@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
 }
 
 android {
@@ -67,7 +66,7 @@ dependencies {
     //koin
     implementation "org.koin:koin-android-viewmodel:2.1.6"
     implementation "org.koin:koin-android:2.1.6"
-    implementation "org.koin:koin-android-architecture:2.1.6"
+
 
     implementation "com.squareup.retrofit2:retrofit:2.3.0"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
@@ -85,8 +84,4 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
 
-    implementation "android.arch.persistence.room:runtime:1.1.0"
-    kapt "android.arch.persistence.room:compiler:1.1.0"
-    implementation "android.arch.persistence.room:rxjava2:1.1.0"
-    testImplementation "android.arch.persistence.room:testing:1.1.0"
 }

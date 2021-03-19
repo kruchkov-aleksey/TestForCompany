@@ -12,6 +12,7 @@ import com.example.testforcompany.main.adapter.DataElementsAdapter
 import com.example.testforcompany.main.viewmodel.DataViewModel
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,8 +29,7 @@ class Favorite : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    val employeeDao: EmployeeDao by inject()
-    private val dataViewModel: DataViewModel by inject()
+    private val dataViewModel: DataViewModel by viewModel()
     private lateinit var adapter: DataElementsAdapter
     private val employees: ArrayList<Employee> = arrayListOf()
 
@@ -51,7 +51,6 @@ class Favorite : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 

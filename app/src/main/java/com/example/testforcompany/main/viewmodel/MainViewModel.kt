@@ -26,7 +26,6 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
         mainRepository.searchPokemon(name).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io()).subscribe(
                 {
-                    Log.e("Response",it.toString())
                     pokemons.postValue(it.forms)
                 },
                 {
