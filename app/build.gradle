@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -53,8 +54,6 @@ dependencies {
     implementation 'com.amitshekhar.android:rx2-android-networking:1.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.18'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation "org.koin:koin-android-viewmodel:{latest-version}"
-    implementation "org.koin:koin-android:{latest-version}"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
@@ -68,6 +67,7 @@ dependencies {
     //koin
     implementation "org.koin:koin-android-viewmodel:2.1.6"
     implementation "org.koin:koin-android:2.1.6"
+    implementation "org.koin:koin-android-architecture:2.1.6"
 
     implementation "com.squareup.retrofit2:retrofit:2.3.0"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
@@ -85,4 +85,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
 
+    implementation "android.arch.persistence.room:runtime:1.1.0"
+    kapt "android.arch.persistence.room:compiler:1.1.0"
+    implementation "android.arch.persistence.room:rxjava2:1.1.0"
+    testImplementation "android.arch.persistence.room:testing:1.1.0"
 }

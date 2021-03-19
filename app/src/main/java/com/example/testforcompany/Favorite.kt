@@ -5,6 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.testforcompany.data.model.Employee
+import com.example.testforcompany.main.adapter.DataElementsAdapter
+import com.example.testforcompany.main.viewmodel.DataViewModel
+import kotlinx.android.synthetic.main.fragment_favorite.*
+import org.koin.android.ext.android.inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,12 +28,23 @@ class Favorite : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    val employeeDao: EmployeeDao by inject()
+    private val dataViewModel: DataViewModel by inject()
+    private lateinit var adapter: DataElementsAdapter
+    private val employees: ArrayList<Employee> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupUI()
+        setupObserver()
     }
 
     override fun onCreateView(
@@ -55,5 +73,20 @@ class Favorite : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+    fun setupUI(){
+        rvDateBase.layoutManager = LinearLayoutManager(context)
+        adapter = DataElementsAdapter(employees)
+        rvDateBase.addItemDecoration(
+            DividerItemDecoration(
+                rvDateBase.context, (rvDateBase.layoutManager as LinearLayoutManager).orientation
+            )
+        )
+        rvDateBase.adapter = adapter
+    }
+    fun setupObserver(){
+        dataViewModel.employees.observe(viewLifecycleOwner,{
+            dataViewModel.employees.value?.let { it1 -> adapter.addData(it1) }
+        })
     }
 }

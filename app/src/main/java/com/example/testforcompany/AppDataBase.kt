@@ -7,5 +7,5 @@ import androidx.room.RoomDatabase
     version = 1
 )
 abstract class AppDataBase: RoomDatabase() {
-    abstract fun EmployeeDao(): EmployeeDao
+    abstract fun employeeDao(): EmployeeDao
 }

@@ -7,7 +7,7 @@ import io.reactivex.Single
 @Dao
 interface EmployeeDao {
 
-    @Query("SELECT * FROM Employee")
+    @Query("SELECT * FROM Employees")
     fun getAll(): Single<List<Employee>>
 
     @Insert
