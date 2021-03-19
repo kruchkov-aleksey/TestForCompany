@@ -86,7 +86,7 @@ class Favorite : Fragment() {
     fun setupObserver(){
         dataViewModel.employees.observe(viewLifecycleOwner,{
             dataViewModel.employees.value?.let { it1 -> adapter.addData(it1) }
+            adapter.notifyDataSetChanged()
         })
-        adapter.notifyDataSetChanged()
     }
 }
