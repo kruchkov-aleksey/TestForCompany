@@ -13,7 +13,9 @@ import org.koin.java.KoinJavaComponent.inject
 class DataViewModel(private val employeeDao: EmployeeDao): ViewModel() {
 
     var employees: MutableLiveData<List<Employee>> = MutableLiveData()
-    init {
+    var employee: MutableLiveData<Employee> = MutableLiveData()
+
+    init{
         fetchEmployee()
     }
     fun fetchEmployee(){
@@ -29,9 +31,21 @@ class DataViewModel(private val employeeDao: EmployeeDao): ViewModel() {
                 })
     }
     fun addEmployee(employee: Employee){
+        Log.e("Response", employee.name)
         employeeDao.insert(employee)
     }
     fun delete(employee: Employee){
         employeeDao.delete(employee)
+    }
+    fun findByName(name: String) {
+        employeeDao.findEmployeeByName(name).observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io()).subscribe(
+            {
+                employee.postValue(it)
+                Log.e("Response",employee.value.toString() + " find")
+            },
+                {
+                    Log.e("error", "", it)
+                })
     }
 }

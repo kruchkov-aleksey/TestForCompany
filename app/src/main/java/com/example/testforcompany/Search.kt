@@ -1,6 +1,7 @@
 package com.example.testforcompany
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,7 @@ class Search : Fragment() {
     private lateinit var adapter: MainAdapter
     private val pokemons: ArrayList<Pokemon> = arrayListOf()
     private val dataViewModel: DataViewModel by viewModel()
-
+    var nameEmployee: String = ""
     private var param1: String? = null
     private var param2: String? = null
 
@@ -48,14 +49,14 @@ class Search : Fragment() {
     }
 
     private val listener: MainAdapter.RecyclerViewClickListener = object:
-    MainAdapter.RecyclerViewClickListener{
-        override fun setOnCheckedChangeListener(item: Pokemon, isChecked: Boolean) {
-            val employee: Employee? = null
-            employee?.name = item.name
+        MainAdapter.RecyclerViewClickListener{
+        override fun onCheckedChangeListener(item: Pokemon, isChecked: Boolean) {
+            val employee = Employee()
+            employee.name = item.name
             if(isChecked){
-                employee?.let { dataViewModel.addEmployee(it) }
+                employee.let { dataViewModel.addEmployee(it) }
             }else{
-                employee?.let { dataViewModel.delete(it) }
+                employee.let { dataViewModel.delete(it) }
             }
         }
     }
@@ -70,8 +71,11 @@ class Search : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
         setupObserverSearch()
+        setupObserveFindEmployee()
         button.setOnClickListener{
             mainViewModel.fetchPokemons(editText.text.toString())
+            dataViewModel.findByName(editText.text.toString())
+            Log.e("Response", nameEmployee + "nameSearch")
         }
     }
 
@@ -91,6 +95,15 @@ class Search : Fragment() {
             adapter.notifyDataSetChanged()
         })
     }
+
+    private fun setupObserveFindEmployee(){
+        dataViewModel.employee.observe(viewLifecycleOwner,{
+            nameEmployee = dataViewModel.employee.value?.name.toString()
+            Log.e("Response", "name")
+        })
+    }
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -18,4 +18,6 @@ interface EmployeeDao {
 
     @Update
     fun update(employee: Employee)
+    @Query("SELECT * FROM Employees WHERE name = :name")
+    fun findEmployeeByName(name: String): Single<Employee>
 }

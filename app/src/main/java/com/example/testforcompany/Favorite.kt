@@ -47,6 +47,7 @@ class Favorite : Fragment() {
         setupObserver()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

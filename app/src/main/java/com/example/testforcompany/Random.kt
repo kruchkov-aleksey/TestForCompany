@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
-import androidx.room.Room.databaseBuilder
 import com.example.testforcompany.data.model.Employee
 import com.example.testforcompany.data.model.Pokemon
 import com.example.testforcompany.main.adapter.MainAdapter
@@ -21,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_search.recyclerView
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -30,6 +29,7 @@ class Random : Fragment() {
     private lateinit var adapter: MainAdapter
     private val pokemons: ArrayList<Pokemon> = arrayListOf()
     private val dataViewModel: DataViewModel by viewModel()
+    var nameEmployee: String = ""
 
     private var param1: String? = null
     private var param2: String? = null
@@ -51,14 +51,15 @@ class Random : Fragment() {
 
     private val listener: MainAdapter.RecyclerViewClickListener = object:
         MainAdapter.RecyclerViewClickListener{
-        override fun setOnCheckedChangeListener(item: Pokemon, isChecked: Boolean) {
+        override fun onCheckedChangeListener(item: Pokemon, isChecked: Boolean) {
+            dataViewModel.findByName(item.name)
             val employee = Employee()
             employee.name = item.name
-            Log.e("Response",employee.name)
-            if(isChecked){
-                employee.let { dataViewModel.addEmployee(it) }
+            if(isChecked) {
+                dataViewModel.addEmployee(employee)
+                Log.e("Response", "yes")
             }else{
-                employee.let { dataViewModel.delete(it) }
+                dataViewModel.delete(employee)
             }
         }
     }
@@ -78,6 +79,12 @@ class Random : Fragment() {
         mainViewModel.pokemons.observe(viewLifecycleOwner,{
             mainViewModel.pokemons.value?.let { it1 -> adapter.addData(it1) }
             adapter.notifyDataSetChanged()
+        })
+    }
+    private fun setupObserveFindEmployee(){
+        dataViewModel.employee.observe(viewLifecycleOwner,{
+            nameEmployee = dataViewModel.employee.value?.name.toString()
+            Log.e("Response", "name")
         })
     }
 
@@ -105,6 +112,7 @@ class Random : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
         setupObserverSearch()
+        setupObserveFindEmployee()
         button_random.setOnClickListener {
             val rnds = (1..800).random()
             mainViewModel.fetchPokemons(rnds.toString())

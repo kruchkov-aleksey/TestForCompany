@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseWrapper<T>(
     @SerializedName("forms")
-    val forms: T
+    val forms: T?
 )
 

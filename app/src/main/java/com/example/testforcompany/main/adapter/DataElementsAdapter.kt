@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.testforcompany.R
 import com.example.testforcompany.data.model.Employee
 import com.example.testforcompany.data.model.Pokemon
+import kotlinx.android.synthetic.main.item_database.view.*
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class DataElementsAdapter(private var employees: ArrayList<Employee>): RecyclerView.Adapter<DataElementsAdapter.DataViewHolder>(){
     inner class DataViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(employee: Employee){
-            itemView.nameView.text = employee.name
+            itemView.nameViewEmployee.text = employee.name
         }
     }
 
